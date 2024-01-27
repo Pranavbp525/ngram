@@ -1,4 +1,3 @@
-
 import altair as alt
 import streamlit as st
 import pandas as pd
@@ -27,10 +26,12 @@ st.subheader("Calculate the probability of a word following a given n-1 gram: ")
 selected_model = st.selectbox("Would you like to apply Laplace Smoothing:", ["No", "Yes"], key="prob_select")
 n = st.number_input("Enter 'n':", min_value=2, value=3)
 sentence = st.text_input(
-    "Enter the n-1 gram sentence prefix. If you enter sentence greater than n-1, only the last n-1 tokens will be considered",
+    "Enter the n-1 gram sentence prefix. If you enter sentence greater than n-1, only the last n-1 tokens will be "
+    "considered",
     "i do")
 word = st.text_input(
-    "Enter the word whose probability you would like to check given n-1 gram sentence. Note: if you enter more tha one word, only last word would be considered",
+    "Enter the word whose probability you would like to check given n-1 gram sentence. Note: if you enter more tha one "
+    "word, only last word would be considered",
     "not")
 n_minus_1_gram = tuple(nltk.word_tokenize(sentence.lower())[-n + 1:])
 word = nltk.word_tokenize(word.lower())[-1]
@@ -65,9 +66,11 @@ st.write("Generated sentence is:", f"**{ngram_model.generate_sentence(l, prefix.
 
 st.subheader("Perplexity comparision of different models")
 st.write(
-    "The ngram models were evaluated on perplexity scores. For this evaluation the model was trained on austen-emma.txt of the the gutenberg corpus and was tested on austen-persuasion.txt")
+    "The ngram models were evaluated on perplexity scores. For this evaluation the model was trained on austen-emma.txt "
+    "of the the gutenberg corpus and was tested on austen-persuasion.txt")
 st.write(
-    "Only Laplace Smoothed ngram models are evaluated for perplexity, since the unsmoothed model throws division by zero exception, as most of the sequences in the testset were not seen in the train set")
+    "Only Laplace Smoothed ngram models are evaluated for perplexity, since the unsmoothed model throws division by zero"
+    " exception, as most of the sequences in the testset were not seen in the train set")
 n = []
 perplexities = []
 for i in range(2, 10):
@@ -124,7 +127,24 @@ smoothed_predictions = generate_predictions_table(smoothed_model, top_bigrams)
 st.table(smoothed_predictions)
 
 st.header("Report")
-st.write("N-gram models represent a category of statistical language models employed in natural language processing and machine learning. The 'N' in 'N-gram' denotes the quantity of words treated as a single unit. These models operate on the concept that the likelihood of a word in a sequence is contingent upon the preceding N-1 words. 'N' serves as a hyperparameter, and in this project, I conducted experiments with 'n' ranging from 2 to 10, assessing their respective perplexity scores.")
-st.write("It is noteworthy that I could calculate perplexity scores exclusively for Laplace-smoothed N-gram models. The computation of perplexity scores for non-smoothed models proved unfeasible, primarily due to recurring division by zero exceptions. This issue arose as I evaluated perplexity using the test data 'austen-persuasion.txt,' while the N-gram model derived its probabilities from the training data 'austen-emma.txt' of the Gutenberg corpus. The majority of N-1 grams in the test set did not occur in the training set, leading to the division by zero error during probability calculations for perplexity.")
-st.write("Upon calculating perplexity scores for the smoothed version across various 'n' values of N-gram models, it emerged that an increase in 'n' corresponded to an elevation in perplexity scores. The evaluation spanned from n=2 to 9, with n=2 yielding the lowest perplexity score of 167, while n=9 resulted in a score of 467.")
-st.write("Laplace smoothing adversely impacted the model's performance. Upon qualitative analysis of the generated text from both the unsmoothed and smoothed models, the unsmoothed model's text appeared more meaningful and coherent compared to the Laplace-smoothed version.")
+st.write(
+    "N-gram models represent a category of statistical language models employed in natural language processing and "
+    "machine learning. The 'N' in 'N-gram' denotes the quantity of words treated as a single unit. These models "
+    "operate on the concept that the likelihood of a word in a sequence is contingent upon the preceding N-1 words. "
+    "'N' serves as a hyperparameter, and in this project, I conducted experiments with 'n' ranging from 2 to 10, "
+    "assessing their respective perplexity scores.")
+st.write(
+    "It is noteworthy that I could calculate perplexity scores exclusively for Laplace-smoothed N-gram models. "
+    "The computation of perplexity scores for non-smoothed models proved unfeasible, primarily due to recurring "
+    "division by zero exceptions. This issue arose as I evaluated perplexity using the test data "
+    "'austen-persuasion.txt,' while the N-gram model derived its probabilities from the training data 'austen-emma.txt' "
+    "of the Gutenberg corpus. The majority of N-1 grams in the test set did not occur in the training set, leading to "
+    "the division by zero error during probability calculations for perplexity.")
+st.write(
+    "Upon calculating perplexity scores for the smoothed version across various 'n' values of N-gram models, it "
+    "emerged that an increase in 'n' corresponded to an elevation in perplexity scores. The evaluation spanned from n=2 "
+    "to 9, with n=2 yielding the lowest perplexity score of 167, while n=9 resulted in a score of 467.")
+st.write(
+    "Laplace smoothing adversely impacted the model's performance. Upon qualitative analysis of the generated text "
+    "from both the unsmoothed and smoothed models, the unsmoothed model's text appeared more meaningful and coherent "
+    "compared to the Laplace-smoothed version.")
