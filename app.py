@@ -1,12 +1,4 @@
-import subprocess
-import sys
 
-
-# Upgrade pip
-subprocess.call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
-
-# Install necessary dependencies
-subprocess.call([sys.executable, "-m", "pip", "install", "nltk"])
 import altair as alt
 import streamlit as st
 import pandas as pd
