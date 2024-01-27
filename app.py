@@ -1,3 +1,4 @@
+!pip install nltk
 import altair as alt
 import streamlit as st
 import pandas as pd
